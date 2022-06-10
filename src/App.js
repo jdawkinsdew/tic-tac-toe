@@ -11,7 +11,7 @@ function App() {
     setPlayer(1)
     setSelected([[], [], []]);
     setWinner(null)
-    setHistory([])
+    setHistory(JSON.stringify([]))
   }
   const handleClick = (x, y) => {
     if (!winner) {
@@ -194,9 +194,9 @@ function App() {
                 History
               </button>
               {show && <div>
-                There are total {JSON.parse(history).length} steps
-                {JSON.parse(history).map((h, i) => (
-                  <div key={i} className="cursor-pointer" onClick={() => {
+                There are total {JSON.parse(history).length - 1} steps
+                {JSON.parse(history).filter((h, i) => i).map((h, i) => (
+                  <div key={i} className="cursor-pointer hover:text-blue-500" onClick={() => {
                     setSelected(h.data);
                   }}>Step {i + 1}</div>
                 ))}
