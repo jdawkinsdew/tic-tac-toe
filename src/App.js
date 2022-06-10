@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Board from "./components/Board";
 
 function App() {
-  const [history, setHistory] = useState([])
+  const [history, setHistory] = useState(JSON.stringify([]))
   const [player, setPlayer] = useState(1);
   const [selected, setSelected] = useState([[], [], []]);
   const [winner, setWinner] = useState(null);
@@ -25,7 +25,7 @@ function App() {
   };
   useEffect(() => {
     if (!winner) {
-      setHistory([...history, { data: selected }]);
+      setHistory(JSON.stringify([...JSON.parse(history), { data: selected }]));
       for (let i = 0; i < 3; i++) {
         if (
           selected[i][0] &&
@@ -58,9 +58,6 @@ function App() {
       }
     }
   }, [selected]);
-  useEffect(() => {
-    console.log('his', history)
-  }, [history])
   return (
     <div className="bg-slate-100 w-screen h-screen">
       <div className="flex items-center h-full">
@@ -197,10 +194,9 @@ function App() {
                 History
               </button>
               {show && <div>
-                There are total {history.length} steps
-                {history.map((h, i) => (
+                There are total {JSON.parse(history).length} steps
+                {JSON.parse(history).map((h, i) => (
                   <div key={i} className="cursor-pointer" onClick={() => {
-                    console.log(h.data)
                     setSelected(h.data);
                   }}>Step {i + 1}</div>
                 ))}
