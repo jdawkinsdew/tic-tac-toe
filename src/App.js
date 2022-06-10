@@ -11,6 +11,7 @@ function App() {
     setPlayer(1)
     setSelected([[], [], []]);
     setWinner(null)
+    setHistory([])
   }
   const handleClick = (x, y) => {
     if (!winner) {
@@ -23,11 +24,8 @@ function App() {
     }
   };
   useEffect(() => {
-    console.log(selected)
     if (!winner) {
-      const currect = history
-      currect.push({ data: selected })
-      setHistory([...currect]);
+      setHistory([...history, { data: selected }]);
       for (let i = 0; i < 3; i++) {
         if (
           selected[i][0] &&
@@ -56,7 +54,7 @@ function App() {
         selected[0][2] == selected[1][1] &&
         selected[1][1] == selected[2][0]
       ) {
-        setWinner(selected[0][0]);
+        setWinner(selected[0][2]);
       }
     }
   }, [selected]);
@@ -202,6 +200,7 @@ function App() {
                 There are total {history.length} steps
                 {history.map((h, i) => (
                   <div key={i} className="cursor-pointer" onClick={() => {
+                    console.log(h.data)
                     setSelected(h.data);
                   }}>Step {i + 1}</div>
                 ))}
